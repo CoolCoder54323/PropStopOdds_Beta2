@@ -11,7 +11,7 @@ let propData:Promise<any> | undefined = undefined
 type message = {text: string}
 function onQuerySubmit(cvent: CustomEvent<message>) {
 	const query = cvent.detail;
-	propData = fetchData(query.text,true)
+	propData = fetchData(query.text)
         
 }
 
