@@ -17,7 +17,7 @@ function onQuerySubmit(cvent: CustomEvent<message>) {
 
 async function fetchData(query:string,local:boolean=false) {
 	// Define the URL of the API you want to fetch data from
-	const globalLink = 'https://propstop-api-logs.ue.r.appspot.com/'
+	const globalLink = 'https://propstop-api-logs.ue.r.appspot.com/query/'
 	const localLink = 'http://127.0.0.1:5000/query/' 
 	console.time('timer1');
 	console.log("fetching " + `${localLink}${encodeURIComponent(query)}`)
