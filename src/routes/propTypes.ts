@@ -17,6 +17,8 @@ export interface GraphDataComponent extends DataComponent {
     keys: string[]; 
     rows: Array<{ [key: string]: any }>
 }
+
+
 // export function calcGridSize(w:number,gridWidth:number,ratio:number){
 //     let width = closestNumber(w, gridWidth);
 //     let numColumns = (width - gridWidth) / gridWidth;
