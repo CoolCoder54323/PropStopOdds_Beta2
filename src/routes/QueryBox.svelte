@@ -51,12 +51,11 @@
     };
 
     const flavorOptions: AutocompleteOption<string>[] = [
-        { label: 'Joel Embiid ppg graph', value: 'Joel Embiid ppg graph'},
-        { label: 'Tyreese Maxey vs joel embiid ppg and assists', value: 'Tyreese Maxey vs joel embiid ppg and assists'},
+        { label: 'Joel Embiid ppg graph', value: 'Joel Embiid ppg graph',keywords:'76ers '},
+        { label: 'Tyreese Maxey vs joel embiid ppg and assists', value: 'Tyreese Maxey vs joel embiid ppg and assists',keywords:'76ers '},
         { label: 'Lebron james last 20 games', value: 'Lebron james last 20 games'},
         { label: 'Nikola Jokic ppg in games against herb jones', value: 'Nikola Jokic ppg in games against herb jones'},
         { label: 'How does steph perform against the Sixers', value: 'How does steph perform against the Sixers'},
-        { label: 'Peach', value: 'peach', keywords: 'fruit', meta: { healthy: true } }
     ];
 
     

@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { type GraphDataComponent } from '../../routes/propTypes.ts';
+    import { type GraphDataComponent,graphGlobal, type GraphGlobal } from '../../routes/propTypes.ts';
     import { Line, } from 'svelte-chartjs'
     import 'chart.js/auto';
 	import { Title } from 'chart.js/auto';
@@ -39,6 +39,7 @@
     },
     // ... add more if there are more datasets
 ];
+    
 
     export let data:GraphDataComponent | undefined = undefined;
 
@@ -107,6 +108,7 @@
                     position: 'left', // Positioning the y-axis on the left
                     type:'linear',
                     min: 0, // Setting the y-axis to a logarithmic scale
+                    max:$graphGlobal.max
                 },
 
         },

@@ -20,7 +20,7 @@
 <script lang="ts">
 	import { ProgressRadial } from '@skeletonlabs/skeleton';
 	import Grid, { GridItem } from 'svelte-grid-extended';
-  import { type DataComponent, type LogDataComponent } from './propTypes.ts';
+  import { graphGlobal, type DataComponent, type GraphDataComponent, type LogDataComponent } from './propTypes.ts';
   import PropTable from '$lib/PropCore/PropTable.svelte';
   import PropGraph from '$lib/PropCore/PropGraph.svelte';
 
@@ -61,6 +61,14 @@
       case 'PlayerLog_Component':
         return PropTable;
       case 'Graph_Component':
+        const graph = dataComponent as GraphDataComponent
+        graph.rows.forEach((value)=>{
+          Object.values(value).forEach((val)=>{
+            if (Number(val) > $graphGlobal.max){
+              graphGlobal.set({max:Number(val) })
+            } 
+          })
+        })
         return PropGraph
     }
   }

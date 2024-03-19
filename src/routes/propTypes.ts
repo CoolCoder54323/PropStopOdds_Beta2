@@ -1,8 +1,16 @@
-// import { writable } from "svelte/store";
+import { writable } from "svelte/store";
 
 
-// export let drawStatez = writable('closed')
-// export let page = writable('home')
+
+
+
+export interface GraphGlobal {
+    max:number
+}
+
+const glob:GraphGlobal = {max:50}
+export let graphGlobal = writable(glob)
+
 
 export interface DataComponent {
     player_name:string,
