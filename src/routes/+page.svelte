@@ -21,7 +21,7 @@ async function fetchData(query:string,local:boolean=false) {
 	const localLink = 'http://127.0.0.1:5000/query/' 
 	console.time('timer1');
 	console.log("fetching " + `${globalLink}${encodeURIComponent(query)}`)
-	const apiUrl = `${localLink}${encodeURIComponent(query)}`;
+	const apiUrl = `${globalLink}${encodeURIComponent(query)}`;
 	const rawData = await fetch(apiUrl)
 	const data:{components:Array<DataComponent>} = await rawData.json()
 	console.timeEnd('timer1')
