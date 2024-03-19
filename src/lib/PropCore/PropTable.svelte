@@ -1,8 +1,8 @@
 <script lang="ts">
     import { Table, ProgressRadial } from '@skeletonlabs/skeleton';
-    import { type LogDataComponent } from '../../routes/propTypes.ts';
+    import { type LogDataComponent, type DataComponent } from '../../routes/propTypes.ts';
 
-    export let data:LogDataComponent;
+    export let data:DataComponent;
 
     type TableSource =  {
         head: string[];
