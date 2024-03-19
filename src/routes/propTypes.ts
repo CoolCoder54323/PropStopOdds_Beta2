@@ -1,12 +1,12 @@
 // import { writable } from "svelte/store";
 
 
-// export let drawState = writable('closed')
+// export let drawStatez = writable('closed')
 // export let page = writable('home')
 
 export interface DataComponent {
+    player_name:string,
     name:string,
-    [key: string]: any;
 }
 
 export interface LogDataComponent extends DataComponent {

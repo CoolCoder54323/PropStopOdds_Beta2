@@ -11,6 +11,7 @@
         foot: string[];
     }
 
+
     function componentToSource(component:LogDataComponent)  {
             const body = component!.rows.map(row => 
                 component!.keys.map(key => {
@@ -18,16 +19,31 @@
                     return String(value);
                 })
             );
+            let keys = component!.keys.map((str)=>{
+                console.log(str.replaceAll("_"," "))
+                return str.replaceAll("_"," ")
+            })
+            console.log(keys)
             return {
-                head:component!.keys,
+                head:keys,
                 body:body,
                 meta:body,
-                foot:["Gamelog"],
+                foot:[`${component!.player_name} Gamelog`],
             }
     }
     
 </script>
 
 <div>
-    <Table source={componentToSource(data)}></Table>
+    <Table source={componentToSource(data)} regionFoot="font-bold"></Table>
 </div>
+
+<style>
+    .gradient-p {
+  @apply bg-clip-text text-transparent box-decoration-clone;
+  /* Direction */
+  @apply bg-gradient-to-br;
+  /* Color Stops */
+  @apply from-secondary-500 to-primary-500;
+}
+</style>

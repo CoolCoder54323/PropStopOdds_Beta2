@@ -9,18 +9,24 @@
                 </svg>
         </div>
 
-        <textarea bind:this={input} class="textarea window-black" rows="1" bind:value={value} on:input={filterInput(resize1)} name="query" autocomplete="off" placeholder="Search Bets, Stats..." required/>
+        <textarea use:popup={popupSettings} bind:this={input} class="textarea window-black" rows="1" bind:value={value} on:input={filterInput(resize1)} name="query" autocomplete="off" placeholder="Search Bets, Stats..." required/>
         <button class="variant-skeleton-secondary window-black">Submit</button>
         
     </div>
-
-    
+    <div data-popup="popupAutocomplete">
+        <Autocomplete
+            bind:input={value}
+            options={flavorOptions}
+            on:selection={onFlavorSelection}
+        />
+    </div> 
 </form>
 
 
 
 
 <script lang="ts">
+	import { Autocomplete, popup, type AutocompleteOption, type PopupSettings } from "@skeletonlabs/skeleton";
     import { onMount } from "svelte";
 	import { createEventDispatcher } from 'svelte';
 
@@ -33,6 +39,25 @@
     
     let dataValue: number[] = [];
 
+    let popupSettings:PopupSettings = {
+	event: 'focus-click',
+	target: 'popupAutocomplete',
+	placement: 'bottom',
+};
+
+    const flavorOptions: AutocompleteOption<string>[] = [
+        { label: 'Vanilla', value: 'vanilla', keywords: 'plain, basic', meta: { healthy: false } },
+        { label: 'Chocolate', value: 'chocolate', keywords: 'dark, white', meta: { healthy: false } },
+        { label: 'Strawberry', value: 'strawberry', keywords: 'fruit', meta: { healthy: true } },
+        { label: 'Neapolitan', value: 'neapolitan', keywords: 'mix, strawberry, chocolate, vanilla', meta: { healthy: false } },
+        { label: 'Pineapple', value: 'pineapple', keywords: 'fruit', meta: { healthy: true } },
+        { label: 'Peach', value: 'peach', keywords: 'fruit', meta: { healthy: true } }
+    ];
+
+    function onFlavorSelection(event: CustomEvent<AutocompleteOption<string>>): void {
+	    value = event.detail.label;
+    }
+				
 
     async function handleSubmit(event:Event) {
         let queryValue = value
