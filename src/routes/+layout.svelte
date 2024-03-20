@@ -1,4 +1,5 @@
 <script lang="ts">
+import { inject } from '@vercel/analytics'
 import '../app.postcss';
 
 import {

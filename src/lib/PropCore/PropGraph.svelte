@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { type GraphDataComponent,graphGlobal, type GraphGlobal } from '../../routes/propTypes.ts';
+    import { type GraphDataComponent, type DataComponent ,graphGlobal, type GraphGlobal } from '../../routes/propTypes.ts';
     import { Line, } from 'svelte-chartjs'
     import 'chart.js/auto';
 	import { Title } from 'chart.js/auto';
@@ -41,8 +41,9 @@
 ];
     
 
-    export let data:GraphDataComponent | undefined = undefined;
-
+    export let data:DataComponent | undefined = undefined;
+    $: graphData = data as GraphDataComponent
+  
     function convertDate(dateString:string) {
         const months:{ [key: string]: string } = {
             'JAN': '01', 'FEB': '02', 'MAR': '03', 'APR': '04',
@@ -101,7 +102,7 @@
 
 <div>
     {#if data !== undefined}
-        <Line data={componentToSource(data)} options={{ 
+        <Line data={componentToSource(graphData)} options={{ 
 
             scales:{
                 y: { // Configuring the y-axis to be logarithmic

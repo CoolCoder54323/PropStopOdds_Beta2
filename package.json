@@ -46,6 +46,7 @@
   "type": "module",
   "dependencies": {
     "@floating-ui/dom": "1.6.3",
+    "@vercel/analytics": "^1.2.2",
     "chart.js": "^4.4.2",
     "highlight.js": "11.9.0",
     "loader@^0.9.357": "link:spline/loader@^0.9.357",

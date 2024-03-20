@@ -10,6 +10,7 @@
         meta: Array<Array<string>>;
         foot: string[];
     }
+    $: logData = data as LogDataComponent;
 
 
     function componentToSource(component:LogDataComponent)  {
@@ -35,7 +36,7 @@
 </script>
 
 <div>
-    <Table source={componentToSource(data)} regionFoot="font-bold"></Table>
+    <Table source={componentToSource(logData)} regionFoot="font-bold"></Table>
 </div>
 
 <style>
