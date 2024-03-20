@@ -23,7 +23,7 @@ import { storePopup } from '@skeletonlabs/skeleton';
 
 storePopup.set({ computePosition, autoUpdate, offset, shift, flip, arrow });
 			
-
+inject()
 initializeStores();
 
 $: drawState = 'closed'
