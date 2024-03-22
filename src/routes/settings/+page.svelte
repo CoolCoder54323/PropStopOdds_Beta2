@@ -12,5 +12,6 @@
 };
 </script>
 
-<PropGraph data={graphDataComponent}></PropGraph>
-<div class="bg-primary-50"></div>
+<div class="">
+    settings
+</div>

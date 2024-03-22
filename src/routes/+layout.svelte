@@ -12,14 +12,15 @@ import {
 	AppRail,
 	AppRailAnchor
 } from '@skeletonlabs/skeleton';
+
 import { computePosition, autoUpdate, offset, shift, flip, arrow } from '@floating-ui/dom';
+import { onMount, type SvelteComponent } from 'svelte';
+import { storePopup } from '@skeletonlabs/skeleton';
+import { scale } from 'svelte/transition';
+import { page } from '$app/stores';
+
 import Navigation from '$lib/Navigation/Navigation.svelte';
 import Burger from '$lib/Navigation/Burger.svelte'
-import { page } from '$app/stores';
-import { scale } from 'svelte/transition';
-import { onMount, type SvelteComponent } from 'svelte';
-
-import { storePopup } from '@skeletonlabs/skeleton';
 
 storePopup.set({ computePosition, autoUpdate, offset, shift, flip, arrow });
 			
@@ -27,12 +28,6 @@ inject()
 initializeStores();
 
 $: drawState = 'closed'
-// let outerHeight = 1000
-
-
-// onMount(()=>{
-
-// })
 
 function drawerOpen(): void {
 	if(drawState == 'open'){
@@ -44,14 +39,8 @@ function drawerOpen(): void {
 
 	console.log(drawState)
 }
-
 </script>
-<!-- <svelte:window bind:outerWidth/> -->
 
-<!-- <div >
-	<Burger on:click={drawerOpen} sclass='p-4'/>
-	<Navigation/>
-</div> -->
 <AppShell class="transition-transform " slotSidebarLeft=""  background="">
 
     <AppBar slot="header" shadow="shadow-sm">
