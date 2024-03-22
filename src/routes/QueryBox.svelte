@@ -1,5 +1,5 @@
 
-<form on:submit|preventDefault={handleSubmit}>   
+<form on:submit|preventDefault={handleSubmit} class="center">   
     <!-- <form method="POST">    -->
     <!-- <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">de</label> -->
 
@@ -15,11 +15,13 @@
         <button class="variant-skeleton-secondary window-black">Submit</button>
         
     </div>
-    <div data-popup="popupAutocomplete" class="max-h-48 p-4 overflow-y-auto bg-black border-teal-600 border-2 z-50" tabindex="-1" style="width: {inputWidth}px; min-width:0px;">
+    <div data-popup="popupAutocomplete" class="max-h-48 sm:max-h-28 rounded-md  ml-4 p-4 overflow-y-auto bg-black border-primary-500 border z-50" tabindex="-1" style="width: {inputWidth-20}px; min-width:0px;">
         <Autocomplete
             bind:input={value}
             options={flavorOptions}
             on:selection={onFlavorSelection}
+            regionButton="text-left text-wrap"
+            regionList="[&>li]:border-b [&>li]:py-2 [&>li]:border-secondary-500"
             
         />
     </div> 
@@ -139,6 +141,7 @@
         border-radius: 0px;   
     }
     .center {
+        display: flex;
         justify-content: center;
     }
 

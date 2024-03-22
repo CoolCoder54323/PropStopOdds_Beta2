@@ -3,30 +3,32 @@
 import Cta from "./CTA.svelte";
 import QueryBox from "./QueryBox.svelte";
 import  Grid  from './PropGrid.svelte'
-import {type DataComponent} from './propTypes.ts'
+import {type DataComponent, graphGlobal} from './propTypes.ts'
 
 
-let propData:Promise<any> | undefined = undefined
+let propData:Promise<DataComponent[]> | undefined = undefined
 
 type message = {text: string}
 function onQuerySubmit(cvent: CustomEvent<message>) {
 	const query = cvent.detail;
 	propData = fetchData(query.text)
-        
+	$graphGlobal = [{
+        type:new Set<string>(['GAME_DATE','PTS']),
+        max:50
+        }]
+	
 }
 
 async function fetchData(query:string,local:boolean=false) {
 	// Define the URL of the API you want to fetch data from
-	const globalLink = 'https://propstop-api-logs.ue.r.appspot.com:443/query/'
-	const localLink = 'http://127.0.0.1:5000/query/' 
-	console.time('timer1');
-	console.log("fetching " + `${localLink}${encodeURIComponent(query)}`)
-	const apiUrl = `${localLink}${encodeURIComponent(query)}`;
+	const links = { globalLink:'https://propstop-api-logs.ue.r.appspot.com:443/query/', localLink: 'http://127.0.0.1:5000/query/'}
+	const link = links.globalLink
+
+	const apiUrl =`${link}${encodeURIComponent(query)}`;
 	const rawData = await fetch(apiUrl)
 	const data:{components:Array<DataComponent>} = await rawData.json()
 	console.timeEnd('timer1')
-	console.log("DATA compotnntes")
-	console.log(data.components)
+	
 	if(!data.components){
 		throw Error("No compono")
 	}
@@ -38,8 +40,7 @@ async function fetchData(query:string,local:boolean=false) {
 </script>
 
 <div class="gradient h-full">
-	<div class="h">
-		<div class="flex justify-center">
+	<div class="flex justify-center">
 		<Cta innerClass="mb-20 mt-20"/>
 	</div>
 	<hr class="mx-1"/>
@@ -47,8 +48,6 @@ async function fetchData(query:string,local:boolean=false) {
 		<QueryBox on:submit={onQuerySubmit}/>
 		<Grid bind:tableDataPromise={propData}/>
 	</div>
-	</div>
-
 </div>
 
 

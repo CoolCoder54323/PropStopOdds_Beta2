@@ -1,16 +1,30 @@
-import { writable } from "svelte/store";
+import { type Writable, writable } from "svelte/store";
+
+export type GraphGlobal = 
+    {
+        type:Set<string>
+        max:number
+    }[]
 
 
+export let graphGlobal:Writable<GraphGlobal> = writable([{
+        type:new Set<string>(['GAME_DATE','PTS']),
+        max:50
+        }])
 
-
-
-export interface GraphGlobal {
-    max:number
+export function findGraphType(keys:string[],types:any[]){
+    outer: for (let index = 0; index < types.length; index++) {
+        const keySet = types[index].type;
+        for (let j = 0; j < keys.length; j++) {
+          const key = keys[j];
+          if(!keySet.has(key)){
+            continue outer
+          }
+        }
+        return index
+      }
+      return -1
 }
-
-const glob:GraphGlobal = {max:50}
-export let graphGlobal = writable(glob)
-
 
 export interface DataComponent {
     player_name:string,
@@ -25,20 +39,3 @@ export interface GraphDataComponent extends DataComponent {
     keys: string[]; 
     rows: Array<{ [key: string]: any }>
 }
-
-
-// export function calcGridSize(w:number,gridWidth:number,ratio:number){
-//     let width = closestNumber(w, gridWidth);
-//     let numColumns = (width - gridWidth) / gridWidth;
-//     let numRows = numColumns * ratio;
-//     return [numColumns,numRows]
-// }
-
-// export function calcGridElement(w:number,gridWidth:number,ratio:number) {
-//     let width = closestNumber(w, gridWidth);
-//     let numColumns = (width - gridWidth) / gridWidth;
-//     let numRows = numColumns * ratio;
-//     return [numColumns,numRows]
-// }
-
-// // export type tableData = 

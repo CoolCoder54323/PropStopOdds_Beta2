@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { type GraphDataComponent, type DataComponent ,graphGlobal, type GraphGlobal } from '../../routes/propTypes.ts';
+    import { type GraphDataComponent, type DataComponent ,graphGlobal, findGraphType } from '../../routes/propTypes.ts';
     import { Line, } from 'svelte-chartjs'
     import 'chart.js/auto';
 	import { Title } from 'chart.js/auto';
@@ -63,7 +63,7 @@
     function componentToSource(component:GraphDataComponent)  {
         const dataKeys = component.keys.filter(key => key !== 'GAME_DATE');
 
-        const datasets = dataKeys.reverse().map((key, index) => {
+        const datasets = dataKeys.map((key, index) => {
             console.log("DATA SET")
             console.log(key)
             const colorSet = colorSets[index % colorSets.length];
@@ -94,13 +94,13 @@
             labels: component.rows.map(row => convertDate(row.GAME_DATE)),
             datasets: datasets
         };
-        console.log(chartData)
         return chartData
     }
+
     
 </script>
 
-<div>
+<div style="position: relative;">
     {#if data !== undefined}
         <Line data={componentToSource(graphData)} options={{ 
 
@@ -109,24 +109,24 @@
                     position: 'left', // Positioning the y-axis on the left
                     type:'linear',
                     min: 0, // Setting the y-axis to a logarithmic scale
-                    max:$graphGlobal.max
+                    max: $graphGlobal[findGraphType(graphData.keys,$graphGlobal)].max
                 },
-
-        },
-        
-        plugins: {
-            title: {
-                display: true,
-                text: `${data.player_name}`,
-                font: {
-                    size: 20
-                },
-                padding: {
-                    top: 10,
-                    bottom: 5
+            },
+            plugins: {
+                title: {
+                    display: true,
+                    text: `${data.player_name}`,
+                    font: {
+                        size: 20
+                    },
+                    padding: {
+                        top: 10,
+                        bottom: 5
+                    }
                 }
-            }
-        },
+            },
+            responsive:true,
+            maintainAspectRatio:false,
         }}
         />
     {/if}
