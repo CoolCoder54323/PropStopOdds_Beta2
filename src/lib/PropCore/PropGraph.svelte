@@ -56,6 +56,8 @@
 
         // Convert the month abbreviation to a number
         const month = months[monthAbbr];
+        if(!month)
+            return dateString
 
         // Output the date in MM/DD format
         return `${month}/${day.substring(0,day.length-1)}`;
@@ -109,7 +111,7 @@
                     position: 'left', // Positioning the y-axis on the left
                     type:'linear',
                     min: 0, // Setting the y-axis to a logarithmic scale
-                    max: $graphGlobal[findGraphType(graphData.keys,$graphGlobal)].max
+                    max: $graphGlobal[findGraphType(graphData.keys,$graphGlobal)] ? $graphGlobal[findGraphType(graphData.keys,$graphGlobal)].max : 20
                 },
             },
             plugins: {

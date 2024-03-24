@@ -8,10 +8,15 @@ import {type DataComponent, graphGlobal} from './propTypes.ts'
 
 let propData:Promise<DataComponent[]> | undefined = undefined
 
+$: {if(propData !== undefined){
+	
+}
+}
+
 type message = {text: string}
 function onQuerySubmit(cvent: CustomEvent<message>) {
-	const query = cvent.detail;
-	propData = fetchData(query.text)
+	const query = cvent.detail.text;
+	propData = fetchData(query)
 	$graphGlobal = [{
         type:new Set<string>(['GAME_DATE','PTS']),
         max:50
@@ -19,10 +24,12 @@ function onQuerySubmit(cvent: CustomEvent<message>) {
 	
 }
 
+
+
 async function fetchData(query:string,local:boolean=false) {
 	// Define the URL of the API you want to fetch data from
 	const links = { globalLink:'https://propstop-api-logs.ue.r.appspot.com:443/query/', localLink: 'http://127.0.0.1:5000/query/'}
-	const link = links.globalLink
+	const link = links.localLink
 
 	const apiUrl =`${link}${encodeURIComponent(query)}`;
 	const rawData = await fetch(apiUrl)
@@ -47,6 +54,8 @@ async function fetchData(query:string,local:boolean=false) {
 	<div class="pt-5 px-5 bg-transparent">
 		<QueryBox on:submit={onQuerySubmit}/>
 		<Grid bind:tableDataPromise={propData}/>
+		<Grid bind:tableDataPromise={propData}/>
+
 	</div>
 </div>
 
