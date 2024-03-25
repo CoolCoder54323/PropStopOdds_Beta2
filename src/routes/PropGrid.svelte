@@ -92,7 +92,7 @@
 
       </div>
       {:then dataComponents}
-        <Grid cols={gridWidth/50} rows={gridWidth/(50/2)}  itemSize={{height:(gridWidth/50)}}  class="">
+        <Grid cols={gridWidth/50} rows={gridWidth/(50/2)}  itemSize={{height:(gridWidth/100)}}  class="">
           <!-- <GridItem x={0} y={0} w={cols/2} h={rows/2} class={`${selected ? "border-teal-600 border-2" : " border border-black "} ${gridBase} `}> -->
         
           <!-- </GridItem> -->

@@ -13,7 +13,7 @@ import {
 	AppRailAnchor
 } from '@skeletonlabs/skeleton';
 
-import { computePosition, autoUpdate, offset, shift, flip, arrow } from '@floating-ui/dom';
+import { computePosition, autoUpdate, offset, shift, flip, arrow, type ComputePositionConfig, type FloatingElement, type ReferenceElement, type ComputePositionReturn, hide, type Middleware } from '@floating-ui/dom';
 import { onMount, type SvelteComponent } from 'svelte';
 import { storePopup } from '@skeletonlabs/skeleton';
 import { scale } from 'svelte/transition';
@@ -22,7 +22,26 @@ import { page } from '$app/stores';
 import Navigation from '$lib/Navigation/Navigation.svelte';
 import Burger from '$lib/Navigation/Burger.svelte'
 
+
+const overide:(reference: ReferenceElement, floating: FloatingElement, options?: Partial<ComputePositionConfig>) => Promise<ComputePositionReturn> = (reference,floating,options)=> {
+	// options?.middleware?.push(hide())
+	// return computePosition(reference,floating,options).then((value) => {
+	// 		const middlewareData = value.middlewareData
+	// 				if (middlewareData.hide) {
+	// 					Object.assign(floating.style, {
+	// 					visibility: middlewareData.hide.referenceHidden
+	// 						? 'hidden'
+	// 						: 'visible',
+	// 					});
+	// 				}
+	// 					return value
+	// 				})
+	return computePosition(reference,floating,options)
+}
+
 storePopup.set({ computePosition, autoUpdate, offset, shift, flip, arrow });
+
+
 			
 inject()
 initializeStores();

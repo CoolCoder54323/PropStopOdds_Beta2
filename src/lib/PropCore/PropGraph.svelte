@@ -44,12 +44,8 @@
     export let data:DataComponent | undefined = undefined;
     $: graphData = data as GraphDataComponent
   
-    function convertDate(dateString:string) {
-        const months:{ [key: string]: string } = {
-            'JAN': '01', 'FEB': '02', 'MAR': '03', 'APR': '04',
-            'MAY': '05', 'JUN': '06', 'JUL': '07', 'AUG': '08',
-            'SEP': '09', 'OCT': '10', 'NOV': '11', 'DEC': '12'
-        };
+    function convertDate(dateString:string,months:{ [key: string]: string }) {
+
 
         // Extract the month abbreviation and the day from the dateString
         const [monthAbbr, day, ] = dateString.split(' ');
@@ -91,9 +87,14 @@
                 data: component.rows.map(row => row[key])
             };
         });
+        const months:{ [key: string]: string } = {
+            'JAN': '01', 'FEB': '02', 'MAR': '03', 'APR': '04',
+            'MAY': '05', 'JUN': '06', 'JUL': '07', 'AUG': '08',
+            'SEP': '09', 'OCT': '10', 'NOV': '11', 'DEC': '12'
+        };
 
         const chartData = {
-            labels: component.rows.map(row => convertDate(row.GAME_DATE)),
+            labels: component.rows.map(row => convertDate(row.GAME_DATE,months)),
             datasets: datasets
         };
         return chartData
