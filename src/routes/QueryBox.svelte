@@ -10,9 +10,10 @@
                 </svg>
         </div>
 
-        <textarea bind:this={input} class="textarea window-black" rows="1" bind:value={value} on:input={filterInput(resize1)} name="query" autocomplete="off" placeholder="Search Bets, Stats..." required/>
+        <textarea on:keydown={(press)=>{if(press.code == 'Enter')
+                                        submitButton.click()}} bind:this={input} class="textarea window-black border-b-0" rows="1" bind:value={value} on:input={filterInput} name="query" autocomplete="off" placeholder="Search Bets, Stats..." required/>
 
-        <button class="variant-skeleton-secondary window-black">Submit</button>
+        <button bind:this={submitButton} class="variant-skeleton-secondary window-black">Submit</button>
         
     </div>
     <div data-popup="popupAutocomplete" class="max-h-48 sm:max-h-28 rounded-md  ml-4 p-4 overflow-y-auto bg-black border-primary-500 border z-50" tabindex="-1" style="width: {inputWidth-20}px; min-width:0px;">
@@ -37,9 +38,7 @@
 	import { createEventDispatcher } from 'svelte';
 
 	const dispatch = createEventDispatcher();
-	function sayHello() {
-
-	}
+    let submitButton:HTMLButtonElement;
 
     $: inputWidth = 0;
     const spacing = 'pl-3 mx-3 pr-3 py-3' 
@@ -60,19 +59,10 @@
         { label: 'How does steph perform against the Sixers', value: 'How does steph perform against the Sixers'},
     ];
 
-    
-
-
-
-
-
-
-
     function onFlavorSelection(event: CustomEvent<AutocompleteOption<string>>): void {
 	    value = event.detail.label;
     }
 				
-
     async function handleSubmit(event:Event) {
         let queryValue = value
         console.log("sumbitting " + queryValue)
@@ -80,45 +70,27 @@
 			text: queryValue
 		});
     }
+
     let update;
     let input:HTMLTextAreaElement;
     let baseHeight = 0;
+
     onMount(()=>{
         update = popup(input,popupSettings)
         baseHeight = input.scrollHeight
-    }) 
+ }) 
 
 
     let value = ''
     let longForm = false;
 
 
-    function filterInput(resize: (event: Event) => void){
-
-        
-        return (event: Event)=> {
+    function filterInput(event: Event){
         // const regex = /^[a-zA-Z0-9 ,.]*$/; // Regex to allow only alphanumeric characters
+        console.log("FIltering")
         let textArea:HTMLTextAreaElement = event.target as HTMLTextAreaElement;
-        textArea.value.replace(/[^a-zA-Z0-9 ,]/g, ''); // Remove non-alphanumeric characters
-        resize(event)
-        
+        value = textArea.value.replace(/[\r\n]|[^a-zA-Z0-9\s]/g, ''); // Remove non-alphanumeric characters        
     }
-
-    }
-    function resize1(event:Event){
-        let textArea:HTMLTextAreaElement = event.target as HTMLTextAreaElement;
-        if(textArea.scrollHeight > baseHeight){
-            longForm = true
-        }
-        console.log(textArea.scrollHeight)
-
-    }
-    function resize2(event:Event){
-        let textArea:HTMLTextAreaElement = event.target as HTMLTextAreaElement;
-        textArea.style.height = ""
-        textArea.style.height= textArea.scrollHeight + "px"
-    }
-
 </script>
 
 <style>

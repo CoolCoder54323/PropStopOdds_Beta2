@@ -93,52 +93,38 @@
       </div>
       {:then dataComponents}
         <Grid cols={gridWidth/50} rows={gridWidth/(50/2)}  itemSize={{height:(gridWidth/100)}}  class="">
-          <!-- <GridItem x={0} y={0} w={cols/2} h={rows/2} class={`${selected ? "border-teal-600 border-2" : " border border-black "} ${gridBase} `}> -->
-        
-          <!-- </GridItem> -->
-          <!-- <GridItem x={0} y={rows/2} w={cols/2} h={rows/2}  class="bg-primary-500 item">Hoy</GridItem> -->
-          {#each dataComponents as component, i}
 
-            <GridItem x={((gridWidth/50)/dataComponents.length)*i} y={0} w={(gridWidth/50)/dataComponents.length} h={gridWidth/100}  class={`${selected ? "border-teal-600 border-2" : " border border-black "} ${gridBase} `}>
-              <!-- <div slot="moveHandle" let:moveStart>
-                <div on:pointerdown={moveStart}>MOVE</div>
-              </div> -->
-              <div>
-                  <svelte:component this={dataToSvelte(component)} data={component}/>
-              </div>
+          {#each dataComponents as component, i}
+            <GridItem x={((gridWidth/50)/dataComponents.length)*i} y={0} w={(gridWidth/50)/dataComponents.length} h={gridWidth/100}  class="{`${selected ? "border-teal-600 border-2" : " border border-black "} ${gridBase} `} overflow-y-auto">
+                  <svelte:component this={dataToSvelte(component)} data={component}/>       
             </GridItem>
           {/each}
 
-          <!-- {#each single as component}
-        
-            
-            
-          {/each} -->
         </Grid>  
-        {:catch err} 
-          {#if hideAlert == false}
-          <aside class="alert variant-filled-error  mt-2">
-              <!-- Icon -->
-              <div>
-                <svg xmlns="http://www.w3.org/2000/svg" width="4em" height="4em" viewBox="0 0 24 24" {...$$props}>
-                  <path fill="currentColor" d="M12.884 2.532c-.346-.654-1.422-.654-1.768 0l-9 17A.999.999 0 0 0 3 21h18a.998.998 0 0 0 .883-1.467zM13 18h-2v-2h2zm-2-4V9h2l.001 5z" />
-                </svg>
-              </div>
-              <!-- Message -->
-              <div class="alert-message">
-                  <h3 class="h3">Error</h3>
-                  <p>{err}</p>
-              </div>
-              <!-- Actions -->
-              <div class="alert-actions">
-                <button class="btn variant-gradient-error-warning" on:click={() => hideAlert = true}>
-                  X
-                </button>
-              </div>
-          </aside>
-          {/if}
+      {:catch err} 
+        {#if hideAlert == false}
+        <aside class="alert variant-filled-error  mt-2">
+            <!-- Icon -->
+            <div>
+              <svg xmlns="http://www.w3.org/2000/svg" width="4em" height="4em" viewBox="0 0 24 24" {...$$props}>
+                <path fill="currentColor" d="M12.884 2.532c-.346-.654-1.422-.654-1.768 0l-9 17A.999.999 0 0 0 3 21h18a.998.998 0 0 0 .883-1.467zM13 18h-2v-2h2zm-2-4V9h2l.001 5z" />
+              </svg>
+            </div>
+            <!-- Message -->
+            <div class="alert-message">
+                <h3 class="h3">Error</h3>
+                <p>{err}</p>
+            </div>
+            <!-- Actions -->
+            <div class="alert-actions">
+              <button class="btn variant-gradient-error-warning" on:click={() => hideAlert = true}>
+                X
+              </button>
+            </div>
+        </aside>
+        {/if}
           
-        {/await}
+      {/await}
 
   {/if}
 </div>

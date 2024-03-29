@@ -35,9 +35,7 @@
     
 </script>
 
-<div>
     <Table source={componentToSource(logData)} regionFoot="font-bold"></Table>
-</div>
 
 <style>
     .gradient-p {

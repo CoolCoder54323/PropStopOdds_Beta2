@@ -7,14 +7,12 @@ import {type DataComponent, graphGlobal} from './propTypes.ts'
 
 
 let propData:Promise<DataComponent[]> | undefined = undefined
-
-$: {if(propData !== undefined){
-	
-}
-}
+let fetching:boolean = false;
 
 type message = {text: string}
 function onQuerySubmit(cvent: CustomEvent<message>) {
+	if(fetching)
+		return
 	const query = cvent.detail.text;
 	propData = fetchData(query)
 	$graphGlobal = [{
@@ -25,16 +23,26 @@ function onQuerySubmit(cvent: CustomEvent<message>) {
 	
 }
 
-
-
 async function fetchData(query:string,local:boolean=false) {
+
 	// Define the URL of the API you want to fetch data from
 	const links = { globalLink:'https://propstop-api-logs.ue.r.appspot.com:443/query/', localLink: 'http://127.0.0.1:5000/query/'}
 	const link = links.globalLink
-
 	const apiUrl =`${link}${encodeURIComponent(query)}`;
-	const rawData = await fetch(apiUrl)
-	const data:{components:Array<DataComponent>} = await rawData.json()
+	let rawData;
+	let data:{components:Array<DataComponent>};
+	let error:Error;
+	console.time('timer1')
+	fetching = true
+	try {
+		rawData = await fetch(apiUrl)
+		data = await rawData.json()
+	}
+	catch (error) {
+		fetching = false
+		throw error
+	}
+	fetching = false
 	console.timeEnd('timer1')
 	
 	if(!data.components){
@@ -42,10 +50,9 @@ async function fetchData(query:string,local:boolean=false) {
 	}
 	
 	return data.components
-
 }
-
 </script>
+
 
 <div class="gradient h-full">
 	<div class="flex justify-center">
@@ -59,7 +66,6 @@ async function fetchData(query:string,local:boolean=false) {
 </div>
 
 
-
 <style>
 	.gradient {
   /* Define initial gradient background */
@@ -67,6 +73,4 @@ async function fetchData(query:string,local:boolean=false) {
   transition: 0.5s ease; /* Smooth transition for the gradient change */
 
 }
-
-	
 </style>

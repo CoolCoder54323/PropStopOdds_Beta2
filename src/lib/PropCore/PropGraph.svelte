@@ -39,31 +39,29 @@
     },
     // ... add more if there are more datasets
 ];
-    
+const months:{ [key: string]: string } = {
+            'JAN': '01', 'FEB': '02', 'MAR': '03', 'APR': '04',
+            'MAY': '05', 'JUN': '06', 'JUL': '07', 'AUG': '08',
+            'SEP': '09', 'OCT': '10', 'NOV': '11', 'DEC': '12'
+        };
 
     export let data:DataComponent | undefined = undefined;
     $: graphData = data as GraphDataComponent
   
-    function convertDate(dateString:string,months:{ [key: string]: string }) {
+    function convertDate(dateString:string) {
 
-
-        // Extract the month abbreviation and the day from the dateString
         const [monthAbbr, day, ] = dateString.split(' ');
-
-        // Convert the month abbreviation to a number
         const month = months[monthAbbr];
+
         if(!month)
             return dateString
 
-        // Output the date in MM/DD format
         return `${month}/${day.substring(0,day.length-1)}`;
     }
     function componentToSource(component:GraphDataComponent)  {
         const dataKeys = component.keys.filter(key => key !== 'GAME_DATE');
 
         const datasets = dataKeys.map((key, index) => {
-            console.log("DATA SET")
-            console.log(key)
             const colorSet = colorSets[index % colorSets.length];
             return {
                 label: key,
@@ -87,14 +85,10 @@
                 data: component.rows.map(row => row[key])
             };
         });
-        const months:{ [key: string]: string } = {
-            'JAN': '01', 'FEB': '02', 'MAR': '03', 'APR': '04',
-            'MAY': '05', 'JUN': '06', 'JUL': '07', 'AUG': '08',
-            'SEP': '09', 'OCT': '10', 'NOV': '11', 'DEC': '12'
-        };
+
 
         const chartData = {
-            labels: component.rows.map(row => convertDate(row.GAME_DATE,months)),
+            labels: component.rows.map(row => convertDate(row.GAME_DATE)),
             datasets: datasets
         };
         return chartData
@@ -103,16 +97,16 @@
     
 </script>
 
-<div style="position: relative;">
-    {#if data !== undefined}
-        <Line data={componentToSource(graphData)} options={{ 
+{#if data !== undefined}
 
+<div style="position: relative;" class="h-full w-full">
+        <Line data={componentToSource(graphData)} options={{ 
             scales:{
-                y: { // Configuring the y-axis to be logarithmic
-                    position: 'left', // Positioning the y-axis on the left
+                y: { 
+                    position: 'left', 
                     type:'linear',
-                    min: 0, // Setting the y-axis to a logarithmic scale
-                    max: $graphGlobal[findGraphType(graphData.keys,$graphGlobal)] ? $graphGlobal[findGraphType(graphData.keys,$graphGlobal)].max : 20
+                    min: 0,
+                    max: $graphGlobal[findGraphType(graphData.keys,$graphGlobal)] ? $graphGlobal[findGraphType(graphData.keys,$graphGlobal)].max+ 1 : 20
                 },
             },
             plugins: {
@@ -130,7 +124,9 @@
             },
             responsive:true,
             maintainAspectRatio:false,
+
         }}
         />
-    {/if}
 </div>
+{/if}
+

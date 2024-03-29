@@ -57,16 +57,15 @@
             </Step>
             <Step>
               <svelte:fragment  slot="header">Have fun</svelte:fragment>
-              .
+              <!-- white space char -->
+              ‎ 
             </Step>
-            <!-- ... -->
           </Stepper>
         
       </div>      
 
   
     </div>
-    {popUp}
   </div>
 
 

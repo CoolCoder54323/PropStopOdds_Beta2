@@ -102,7 +102,7 @@ function drawerOpen(): void {
 			</svelte:fragment>
 	</AppBar>
 
-	<AppRail slot="sidebarLeft" width="w-0 sm:w-20" background="bg-gray-900" active="bg-slate-800" border="border-r border-surface-500">
+	<AppRail slot="sidebarLeft" width="w-0 sm:w-20" background="bg-gray-900" active="bg-slate-800" class="border-r-0 border-surface-500 md:border-r">
 
 
 		<AppRailAnchor href="/" selected={$page.url.pathname === '/'} >
